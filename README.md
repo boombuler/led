@@ -22,7 +22,7 @@ Linux support is planned but I didn't have a linux pc to implement the HID API.
 Most of the device control knowledge is taken from the [NotifierLight](http://notifierlight.blogspot.de/) project.
 
 ## Code example
-```golang
+```go
 package main
 
 import (
