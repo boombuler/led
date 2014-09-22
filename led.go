@@ -55,8 +55,8 @@ func Devices() <-chan DeviceInfo {
 }
 
 func ByPath(path string) (DeviceInfo, error) {
-	hd, err := hid.ByPath(path)
-	if err != nil {
+	hd := hid.ByPath(path)
+	if hd != nil {
 		return nil, err
 	}
 	led := toLedDeviceInfo(hd)
