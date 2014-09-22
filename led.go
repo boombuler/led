@@ -6,8 +6,10 @@ import (
 	"image/color"
 )
 
+// Device type identifies the device type. the IDs may change on each program start.
 type DeviceType int
 
+// String returns a representation of the device type
 func (dt DeviceType) String() string {
 	idx := int(dt)
 	if idx < 0 || idx >= len(drivers) {
@@ -29,17 +31,25 @@ func addDriver(drv driver) DeviceType {
 	return dt
 }
 
+// Device is an opened LED device.
 type Device interface {
+	// SetColor sets the color of the LED to the closest supported color.
 	SetColor(c color.Color) error
+	// Close the device and release all resources
 	Close()
 }
 
+// DeviceInfo keeps information about a physical LED device
 type DeviceInfo interface {
+	// GetPath returns a system specific path which can be used to find the device
 	GetPath() string
+	// GetType returns the "driver type" of the device
 	GetType() DeviceType
+	// Open opens the device for usage
 	Open() (Device, error)
 }
 
+// Devices returns a channel with all connected LED devices
 func Devices() <-chan DeviceInfo {
 	result := make(chan DeviceInfo)
 	go func() {
@@ -54,6 +64,7 @@ func Devices() <-chan DeviceInfo {
 	return result
 }
 
+// ByPath searches a device by given system specific path. (The path can be obtained from the GetPath func from DeviceInfo)
 func ByPath(path string) (DeviceInfo, error) {
 	hd, err := hid.ByPath(path)
 	if err != nil {
