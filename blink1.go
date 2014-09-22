@@ -5,6 +5,7 @@ import (
 	"image/color"
 )
 
+// Device type: blink(1)
 var Blink1 DeviceType
 
 func init() {

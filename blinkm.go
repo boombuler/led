@@ -5,6 +5,7 @@ import (
 	"image/color"
 )
 
+// Device type: LinkM / BlinkM
 var BlinkM DeviceType
 
 func init() {

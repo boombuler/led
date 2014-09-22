@@ -6,7 +6,10 @@ import (
 	"time"
 )
 
+// Device type: BusyLight UC
 var BusyLightUC DeviceType
+
+// Device type: BusyLight Lync
 var BusyLightLync DeviceType
 
 func init() {

@@ -5,6 +5,7 @@ import (
 	"image/color"
 )
 
+// Device type: BlinkStick
 var BlinkStick DeviceType
 
 func init() {

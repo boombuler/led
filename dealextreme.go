@@ -5,6 +5,7 @@ import (
 	"image/color"
 )
 
+// Device type: DealExtreme USBMailNotifier
 var DealExtreme DeviceType
 
 func init() {

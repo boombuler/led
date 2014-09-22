@@ -5,6 +5,7 @@ import (
 	"image/color"
 )
 
+// Device type: Blync
 var Blync DeviceType
 
 func init() {

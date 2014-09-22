@@ -5,6 +5,7 @@ import (
 	"image/color"
 )
 
+// Device type: DreamCheeky USBMailNotifier
 var DreamCheeky DeviceType
 
 func init() {
