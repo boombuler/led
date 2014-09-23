@@ -35,7 +35,7 @@ import (
     "time"
 )
 
-const RED = color.RGBA{0xFF, 0x00, 0x00, 0xFF}
+var RED color.RGBA = color.RGBA{0xFF, 0x00, 0x00, 0xFF}
 
 func main() {
     for devInfo := range led.Devices() {
