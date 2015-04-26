@@ -29,6 +29,5 @@ func (d *blinkMDev) SetColor(c color.Color) error {
 	return d.dev.WriteFeature([]byte{0x01, 0xDA, 0x01, 0x05, 0x00, 0x09, 0x6E, byte(r >> 8), byte(g >> 8), byte(b >> 8)})
 }
 func (d *blinkMDev) Close() {
-	d.SetColor(color.Black)
 	d.dev.Close()
 }

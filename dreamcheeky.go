@@ -36,6 +36,5 @@ func (d *dreamCheekyDev) SetColor(c color.Color) error {
 	return d.dev.Write([]byte{0x00, byte(r >> 10), byte(g >> 10), byte(b >> 10), 0x00, 0x00, 0x54, 0x2C, 0x05})
 }
 func (d *dreamCheekyDev) Close() {
-	d.SetColor(color.Black)
 	d.dev.Close()
 }
