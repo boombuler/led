@@ -44,7 +44,10 @@ func main() {
             fmt.Println(err)
             continue
         }
-        defer dev.Close()
+        defer func() {
+            dev.SetColor(color.Black)
+            dev.Close()
+        }()
         dev.SetColor(RED)
 
         time.Sleep(2 * time.Second) // Wait 2 seconds because the device will turn off once it is closed!

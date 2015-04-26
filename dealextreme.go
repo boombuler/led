@@ -39,6 +39,5 @@ func (d *dealExtremeDev) SetColor(c color.Color) error {
 	return d.dev.Write([]byte{0x00, byte(palette.Index(c))})
 }
 func (d *dealExtremeDev) Close() {
-	d.SetColor(color.Black)
 	d.dev.Close()
 }

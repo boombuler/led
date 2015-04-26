@@ -60,7 +60,6 @@ func newBusyLight(d hid.Device, setcolorFn func(c color.Color)) *busylightDev {
 				setcolorFn(curColor)
 			case <-closeChan:
 				ticker.Stop()
-				setcolorFn(color.Black) // turn off device
 				d.Close()
 				closed = true
 			}

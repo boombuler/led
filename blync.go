@@ -55,6 +55,5 @@ func (d *blyncDev) SetColor(c color.Color) error {
 }
 
 func (d *blyncDev) Close() {
-	d.SetColor(color.Black)
 	d.dev.Close()
 }
