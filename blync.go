@@ -31,7 +31,7 @@ type blyncDriver struct {
 
 func (drv blyncDriver) convert(hDev *hid.DeviceInfo) DeviceInfo {
 	// blync adds two devices. but only the one which accepts feature reports will work.
-	if hDev.FeatureReportLength > 0 {
+	if hDev.FeatureReportLength == 0 {
 		return drv.usbDriver.convert(hDev)
 	}
 	return nil
