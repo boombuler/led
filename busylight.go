@@ -33,7 +33,7 @@ func init() {
 		Open: func(d hid.Device) (Device, error) {
 			return newBusyLight(d, func(c color.Color) {
 				r, g, b, _ := c.RGBA()
-				d.Write([]byte{0x8A, 0x00, 0x00, byte(r >> 8), byte(g >> 8), byte(b >> 8), 0x01, 0x00, 0x80})
+				d.Write([]byte{0x00, 0x00, 0x00, byte(r >> 8), byte(g >> 8), byte(b >> 8), 0x00, 0x00, 0x00})
 			}), nil
 		},
 	})
