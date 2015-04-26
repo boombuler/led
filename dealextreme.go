@@ -15,16 +15,15 @@ func init() {
 		VendorId:  0x1294,
 		ProductId: 0x1320,
 		Open: func(d hid.Device) (Device, error) {
-			return &dealExtremeDev{d}, nil
+			return &simpleHidDevice{
+				device:     d,
+				setColorFn: dealExtremeSetColor,
+			}, nil
 		},
 	})
 }
 
-type dealExtremeDev struct {
-	dev hid.Device
-}
-
-func (d *dealExtremeDev) SetColor(c color.Color) error {
+func dealExtremeSetColor(d hid.Device, c color.Color) error {
 	palette := color.Palette{
 		color.RGBA{0x00, 0x00, 0x00, 0x00},
 		color.RGBA{0x00, 0xff, 0x00, 0xff},
@@ -36,9 +35,5 @@ func (d *dealExtremeDev) SetColor(c color.Color) error {
 		color.RGBA{0xff, 0x00, 0xff, 0xff},
 		color.RGBA{0xff, 0xff, 0xff, 0xff},
 	}
-	return d.dev.Write([]byte{0x00, byte(palette.Index(c))})
-}
-func (d *dealExtremeDev) Close() {
-	d.SetColor(color.Black)
-	d.dev.Close()
+	return d.Write([]byte{0x00, byte(palette.Index(c))})
 }

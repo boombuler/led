@@ -15,20 +15,15 @@ func init() {
 		VendorId:  0x27B8,
 		ProductId: 0x01ED,
 		Open: func(d hid.Device) (Device, error) {
-			return &blink1Dev{d}, nil
+			return &simpleHidDevice{
+				device:     d,
+				setColorFn: blink1SetColor,
+			}, nil
 		},
 	})
 }
 
-type blink1Dev struct {
-	dev hid.Device
-}
-
-func (d *blink1Dev) SetColor(c color.Color) error {
+func blink1SetColor(d hid.Device, c color.Color) error {
 	r, g, b, _ := c.RGBA()
-	return d.dev.WriteFeature([]byte{0x01, 0x63, byte(r >> 8), byte(g >> 8), byte(b >> 8), 0x00, 0x00, 0x00, 0x00})
-}
-func (d *blink1Dev) Close() {
-	d.SetColor(color.Black)
-	d.dev.Close()
+	return d.WriteFeature([]byte{0x01, 0x63, byte(r >> 8), byte(g >> 8), byte(b >> 8), 0x00, 0x00, 0x00, 0x00})
 }

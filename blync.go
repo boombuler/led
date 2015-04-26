@@ -16,7 +16,10 @@ func init() {
 			VendorId:  0x1130,
 			ProductId: 0x0001,
 			Open: func(d hid.Device) (Device, error) {
-				return &blyncDev{d}, nil
+				return &simpleHidDevice{
+					device:     d,
+					setColorFn: blyncDevSetColor,
+				}, nil
 			},
 		},
 	})
@@ -34,11 +37,7 @@ func (drv blyncDriver) convert(hDev *hid.DeviceInfo) DeviceInfo {
 	return nil
 }
 
-type blyncDev struct {
-	dev hid.Device
-}
-
-func (d *blyncDev) SetColor(c color.Color) error {
+func blyncDevSetColor(d hid.Device, c color.Color) error {
 	palette := color.Palette{
 		color.RGBA{0x00, 0x00, 0x00, 0x00}, // black
 		color.RGBA{0xff, 0xff, 0xff, 0xff}, // white
@@ -51,10 +50,5 @@ func (d *blyncDev) SetColor(c color.Color) error {
 	}
 
 	value := byte((palette.Index(c) * 16) + 127)
-	return d.dev.Write([]byte{0x00, 0x55, 0x53, 0x42, 0x43, 0x00, 0x40, 0x02, value})
-}
-
-func (d *blyncDev) Close() {
-	d.SetColor(color.Black)
-	d.dev.Close()
+	return d.Write([]byte{0x00, 0x55, 0x53, 0x42, 0x43, 0x00, 0x40, 0x02, value})
 }

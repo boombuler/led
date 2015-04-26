@@ -1,6 +1,7 @@
 package led
 
 import (
+	"errors"
 	"fmt"
 	"github.com/boombuler/hid"
 	"image/color"
@@ -31,10 +32,17 @@ func addDriver(drv driver) DeviceType {
 	return dt
 }
 
+// Some devices does not support KeepActive.
+var ErrKeepActiveNotSupported = errors.New("KeepActive is not supported by this device")
+
 // Device is an opened LED device.
 type Device interface {
 	// SetColor sets the color of the LED to the closest supported color.
 	SetColor(c color.Color) error
+
+	// SetKeepActive sets a value that tells the device not turn off the device on calling Close. By default the device is turned off!
+	SetKeepActive(v bool) error
+
 	// Close the device and release all resources
 	Close()
 }

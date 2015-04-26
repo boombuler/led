@@ -67,7 +67,10 @@ func newBusyLight(d hid.Device, setcolorFn func(c color.Color)) *busylightDev {
 		}
 	}()
 	return &busylightDev{closeChan: closeChan, colorChan: colorChan}
+}
 
+func (d *busylightDev) SetKeepActive(v bool) error {
+	return ErrKeepActiveNotSupported
 }
 
 func (d *busylightDev) SetColor(c color.Color) error {
